@@ -19,7 +19,7 @@ function main() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             yield mongoose_1.default.connect(config_1.config.Mongodb_url);
-            console.log("successfull mongodb connected");
+            console.log('successfull mongodb connected');
         }
         catch (err) {
             console.log(err);
@@ -27,6 +27,6 @@ function main() {
     });
 }
 app_1.default.listen(config_1.config.port, () => {
-    console.log(`assignment-02 backend start`);
+    console.log(`assignment-02 backend start ${config_1.config.port}`);
 });
 main();
