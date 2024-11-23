@@ -38,7 +38,7 @@ Follow these steps to set up the project locally:
 
 ### **Prerequisites**  
 Ensure you have the following installed:  
-- [Node.js (v16+)](https://nodejs.org/)  
+- [Node.js](https://nodejs.org/)  
 - [MongoDB](https://www.mongodb.com/)  
 
 ### **Installation**  
