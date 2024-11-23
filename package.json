@@ -6,11 +6,15 @@
   "scripts": {
     "build": "tsc",
     "start:prod": "node ./dist/server.js",
+    "start": "node ./dist/server.js",
     "start:dev": "ts-node-dev --respawn --transpile-only ./src/server.ts",
     "lint": "npx eslint ./src/**/*.ts",
     "lint:fix": "npx eslint ./src/**/*.ts --fix",
     "formet": "prettier --ignore-path .gitignore --write \"./src/**/*.+(js|ts|json)\"",
     "formet:fix": "prettier --write src"
+  },
+  "engines": {
+    "node": "20.x"
   },
   "keywords": [],
   "author": "",
