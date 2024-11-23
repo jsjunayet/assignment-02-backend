@@ -98,7 +98,7 @@ const GerSingleCarInMonogdb = async (req: Request, res: Response) => {
     });
   } catch (err) {
     res
-      .status(200)
+      .status(500)
       .json({ message: 'Car retrieved failed', success: false, data: err });
   }
 };
@@ -122,7 +122,7 @@ const UpdatedCarInMonogdb = async (req: Request, res: Response) => {
     });
   } catch (err) {
     res
-      .status(200)
+      .status(500)
       .json({ message: 'Car updated failed', success: false, data: err });
   }
 };
@@ -145,7 +145,7 @@ const DeleltedCarInMonogdb = async (req: Request, res: Response) => {
     });
   } catch (err) {
     res
-      .status(200)
+      .status(500)
       .json({ message: 'Car deleted falied', success: false, data: err });
   }
 };

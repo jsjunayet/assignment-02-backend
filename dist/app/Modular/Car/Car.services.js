@@ -15,8 +15,19 @@ const CreateCarService = (Car) => __awaiter(void 0, void 0, void 0, function* ()
     const result = yield Car_Model_1.CarModel.create(Car);
     return result;
 });
-const GetCarService = () => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield Car_Model_1.CarModel.find();
+const GetCarService = (searchTerm) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!searchTerm) {
+        const result = yield Car_Model_1.CarModel.find();
+        return result;
+    }
+    const query = {
+        $or: [
+            { brand: { $regex: searchTerm, $options: 'i' } },
+            { model: { $regex: searchTerm, $options: 'i' } },
+            { category: { $regex: searchTerm, $options: 'i' } },
+        ],
+    };
+    const result = yield Car_Model_1.CarModel.find(query);
     return result;
 });
 const GetSingleCarService = (id) => __awaiter(void 0, void 0, void 0, function* () {
@@ -36,5 +47,5 @@ exports.CarServices = {
     GetCarService,
     GetSingleCarService,
     updateCarService,
-    DeletedCarService
+    DeletedCarService,
 };

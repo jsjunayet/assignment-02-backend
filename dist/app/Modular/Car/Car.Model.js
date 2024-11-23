@@ -11,12 +11,14 @@ const CarSchema = new mongoose_2.Schema({
     model: { type: String, required: true },
     year: { type: Number, required: true },
     price: { type: Number, required: true },
-    category: { type: String,
-        required: [true, "Category is required"],
+    category: {
+        type: String,
+        required: [true, 'Category is required'],
         enum: {
-            values: ["Sedan", "SUV", "Truck", "Coupe", "Convertible"],
-            message: '{VALUE} is not supported'
-        } },
+            values: ['Sedan', 'SUV', 'Truck', 'Coupe', 'Convertible'],
+            message: '{VALUE} is not supported',
+        },
+    },
     description: { type: String, required: true },
     quantity: { type: Number, required: true },
     inStock: { type: Boolean, required: true },
