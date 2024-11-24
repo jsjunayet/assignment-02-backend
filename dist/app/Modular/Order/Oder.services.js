@@ -59,16 +59,16 @@ const CalculateRevenueService = () => __awaiter(void 0, void 0, void 0, function
             $group: {
                 _id: null,
                 totalRevenue: {
-                    $sum: { $multiply: ['$carDetails.price', '$quantity'] }
-                }
-            }
+                    $sum: { $multiply: ['$carDetails.price', '$quantity'] },
+                },
+            },
         },
         {
             $project: {
                 _id: 0,
-                totalRevenue: 1
-            }
-        }
+                totalRevenue: 1,
+            },
+        },
     ]);
     // it's not used reference in revenue
     // const result = await OrderModel.aggregate([

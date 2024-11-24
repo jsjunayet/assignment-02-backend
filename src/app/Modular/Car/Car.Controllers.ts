@@ -11,7 +11,7 @@ const CreateCarInMonogdb = async (req: Request, res: Response) => {
   } catch (err: unknown) {
     if (err instanceof Error) {
       res.status(500).json({
-        message: 'Car created failed',
+        message: 'Validation failed',
         success: false,
         error: (err as { errors?: unknown }).errors, // Type assertion to access 'errors'
         stack: err.stack,
@@ -47,6 +47,14 @@ const GerSingleCarInMonogdb = async (req: Request, res: Response) => {
   try {
     const id = req.params.carId;
     const data = await CarServices.GetSingleCarService(id);
+    if(!data){
+      res.status(404).json({
+        message: 'Car ID not found',
+        success: false,
+        data: data,
+      });
+      return
+    }
     res.status(200).json({
       message: 'Car retrieved successfully',
       success: true,
@@ -65,7 +73,7 @@ const UpdatedCarInMonogdb = async (req: Request, res: Response) => {
     const data = await CarServices.updateCarService(id, body);
     if (!data) {
       res.status(404).json({
-        message: 'Car update not found',
+        message: 'Car ID not found',
         status: false,
         data: data,
       });
@@ -88,7 +96,7 @@ const DeleltedCarInMonogdb = async (req: Request, res: Response) => {
     const data = await CarServices.DeletedCarService(id);
     if (!data) {
       res.status(404).json({
-        message: 'Car not found',
+        message: 'Car ID not found',
         status: false,
         data: {},
       });

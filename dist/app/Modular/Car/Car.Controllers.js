@@ -22,7 +22,7 @@ const CreateCarInMonogdb = (req, res) => __awaiter(void 0, void 0, void 0, funct
     catch (err) {
         if (err instanceof Error) {
             res.status(500).json({
-                message: 'Car created failed',
+                message: 'Validation failed',
                 success: false,
                 error: err.errors, // Type assertion to access 'errors'
                 stack: err.stack,
@@ -58,6 +58,14 @@ const GerSingleCarInMonogdb = (req, res) => __awaiter(void 0, void 0, void 0, fu
     try {
         const id = req.params.carId;
         const data = yield Car_Services_1.CarServices.GetSingleCarService(id);
+        if (!data) {
+            res.status(404).json({
+                message: 'Car ID not found',
+                success: false,
+                data: data,
+            });
+            return;
+        }
         res.status(200).json({
             message: 'Car retrieved successfully',
             success: true,
@@ -77,7 +85,7 @@ const UpdatedCarInMonogdb = (req, res) => __awaiter(void 0, void 0, void 0, func
         const data = yield Car_Services_1.CarServices.updateCarService(id, body);
         if (!data) {
             res.status(404).json({
-                message: 'Car update not found',
+                message: 'Car ID not found',
                 status: false,
                 data: data,
             });
@@ -101,7 +109,7 @@ const DeleltedCarInMonogdb = (req, res) => __awaiter(void 0, void 0, void 0, fun
         const data = yield Car_Services_1.CarServices.DeletedCarService(id);
         if (!data) {
             res.status(404).json({
-                message: 'Car not found',
+                message: 'Car ID not found',
                 status: false,
                 data: {},
             });

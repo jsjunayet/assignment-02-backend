@@ -47,7 +47,7 @@ const CalculateRevenueInMongodb = (req, res) => __awaiter(void 0, void 0, void 0
             message: 'Revenue calculated successfully',
             status: true,
             data: {
-                totalRevenue: data
+                totalRevenue: data,
             },
         });
     }
