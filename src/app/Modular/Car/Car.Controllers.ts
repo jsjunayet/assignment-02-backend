@@ -1,64 +1,20 @@
 import { Request, Response } from 'express';
 import { CarServices } from './Car.Services';
-import { CarValidation } from './car.validationZod';
-import { z } from 'zod';
 const CreateCarInMonogdb = async (req: Request, res: Response) => {
   try {
-    const validatedCar = CarValidation.parse(req.body);
+    const BodyCar = req.body;
 
-    const data = await CarServices.CreateCarService(validatedCar);
+    const data = await CarServices.CreateCarService(BodyCar);
     res
       .status(200)
       .json({ message: 'Car created successfully', success: true, data: data });
-  } catch (err) {
-    if (err instanceof z.ZodError) {
-      // Define the type for errors
-      type ValidationError = {
-        [key: string]: {
-          message: string;
-          name: string;
-          properties: {
-            message: string;
-            type: string;
-            value: string;
-          };
-          kind: string;
-          path: string;
-          value: number | string | boolean;
-        };
-      };
-
-      // Use the type for the reduce accumulator
-      const errors = err.errors.reduce<ValidationError>((acc, curr) => {
-        const field = String(curr.path[0]); // Ensure the field is a string
-        acc[field] = {
-          message: curr.message,
-          name: 'ValidatorError',
-          properties: {
-            message: curr.message,
-            type: curr.code,
-            value: field,
-          },
-          kind: curr.code,
-          path: field,
-          value: field,
-        };
-        return acc;
-      }, {});
-
-      res.status(400).json({
-        message: 'Validation failed',
-        success: false,
-        error: {
-          name: 'ValidationError',
-          errors: errors,
-        },
-        stack: err.stack,
-      });
-    } else {
+  } catch (err: unknown) {
+    if (err instanceof Error) {
       res.status(500).json({
-        message: 'Internal server error',
+        message: 'Car created failed',
         success: false,
+        error: (err as { errors?: unknown }).errors, // Type assertion to access 'errors'
+        stack: err.stack,
       });
     }
   }
@@ -72,7 +28,7 @@ const GerCarInMonogdb = async (req: Request, res: Response) => {
       res.status(404).json({
         message: 'No cars found for the given search term',
         success: false,
-        data: [],
+        data: data,
       });
       return;
     }
@@ -83,7 +39,7 @@ const GerCarInMonogdb = async (req: Request, res: Response) => {
     });
   } catch (err) {
     res
-      .status(200)
+      .status(500)
       .json({ message: 'Car retrieved failed', success: false, data: err });
   }
 };

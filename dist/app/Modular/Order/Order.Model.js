@@ -26,13 +26,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrderModel = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const OrderSchema = new mongoose_1.Schema({
-    email: { type: String, required: [true, 'please enter your email'] },
-    car: { type: String, required: [true, 'please enter your car ID'] },
+    email: { type: String, required: [true, 'please enter your email. email is required'] },
+    car: { type: mongoose_1.default.Schema.Types.ObjectId, ref: 'Car', required: [true, 'please enter your carID'] },
     quantity: {
         type: Number,
-        min: [1, 'greater than 1'],
-        required: [true, 'please enter your email'],
+        min: [1, 'greater than 0'],
+        required: [true, 'please enter your quantity. quantity is required'],
     },
-    totalPrice: { type: Number },
-});
+    totalPrice: { type: Number, required: [true, 'please enter your totalPrice. totalPrice is required'] },
+}, { timestamps: true, versionKey: false });
 exports.OrderModel = mongoose_1.default.model('Order', OrderSchema);

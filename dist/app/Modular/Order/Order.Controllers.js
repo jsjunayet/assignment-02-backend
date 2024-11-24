@@ -23,18 +23,21 @@ const CreateOrderInMonogdb = (req, res) => __awaiter(void 0, void 0, void 0, fun
             });
             return;
         }
-        res.status(500).json({
+        res.status(404).json({
             message: 'Order created failed',
             success: false,
             error: data.message,
         });
     }
     catch (err) {
-        res.status(500).json({
-            message: 'Order created successfully',
-            success: false,
-            err,
-        });
+        if (err instanceof Error) {
+            res.status(500).json({
+                message: 'Order created failed',
+                success: false,
+                error: err.errors, // Type assertion to access 'errors'
+                stack: err.stack,
+            });
+        }
     }
 });
 const CalculateRevenueInMongodb = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -43,7 +46,9 @@ const CalculateRevenueInMongodb = (req, res) => __awaiter(void 0, void 0, void 0
         res.status(200).json({
             message: 'Revenue calculated successfully',
             status: true,
-            data: data,
+            data: {
+                totalRevenue: data
+            },
         });
     }
     catch (err) {
