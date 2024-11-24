@@ -5,7 +5,6 @@ A robust Node.js and TypeScript-based application designed to streamline backend
 
 ## 🚀 **Live URL**  
 [https://assignment-02-backend.vercel.app/](#)  
-*(Replace this with the actual deployment URL once the app is live)*
 
 ---
 
